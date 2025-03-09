@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stock Tracker</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #stock-container { margin-top: 20px; }
+        .stock { margin: 10px; padding: 10px; border: 1px solid #ddd; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Live Stock Market Tracker</h1>
+    <input type="text" id="symbol" placeholder="Enter Stock Symbol" />
+    <button onclick="fetchStockData()">Track</button>
+    <div id="stock-container"></div>
+
+    <script>
+        async function fetchStockData() {
+            const symbol = document.getElementById("symbol").value.toUpperCase();
+            if (!symbol) return alert("Please enter a stock symbol");
+            
+            const apiKey = "H9WA350ICJAW56KJ";
+            const url = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${apiKey}`;
+            
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!data["Time Series (5min)"]) {
+                    alert("Invalid symbol or API limit reached");
+                    return;
+                }
+                
+                const latestTime = Object.keys(data["Time Series (5min)"])[0];
+                const price = data["Time Series (5min)"][latestTime]["4. close"];
+                
+                document.getElementById("stock-container").innerHTML = `
+                    <div class="stock">
+                        <h2>${symbol}</h2>
+                        <p>Latest Price: $${parseFloat(price).toFixed(2)}</p>
+                        <p>Updated at: ${latestTime}</p>
+                    </div>
+                `;
+            } catch (error) {
+                alert("Error fetching stock data");
+            }
+        }
+    </script>
+</body>
+</html>
