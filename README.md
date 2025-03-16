@@ -1,2 +1,3 @@
 # stocktracker
 This is the beginning of my AI personalized financial advice, all in one, LLM Agent project. The first starting step was using ChatGPT, and Alpha Vantage API, to get real time stock prices. The project is a work in progress. I will post monthly updates on my project on LinkedIn, and updating the README.md file here. I will be using Render to deploy the API, use a web scraper for financial staements data, to extract.
+Note: For my project stock tracker, all prices are listed in USD, the US Dollar is the currency used for the project, to clear any questions you have about the currency being used!!!
